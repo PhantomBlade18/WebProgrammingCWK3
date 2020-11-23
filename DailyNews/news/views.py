@@ -8,7 +8,10 @@ from news.models import Member
 from news.models import Article
 import json
 
-# Create your views here.
+def index(request):
+    articles = Article.objects.all()
+    context = {'articles': articles}
+    return render(request,'news/index.html', context)
 
 def registerMemberView(request):
     return render(request)
