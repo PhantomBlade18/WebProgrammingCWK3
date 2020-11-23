@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # main page
-    path('', views.index, name='index'),
+    #path('DeleteMovie/<int:mid>/',views.DeleteMovie, name = 'DeleteMovie'), EXAMPLE
+
+    path('registerUser', views.registerUser, name = 'registerUserView')
+
 ]
