@@ -8,7 +8,7 @@ import json
 
 # Create your views here.
 
-def registerMemberView(request):
+def registerUserView(request):
     return render(request)
 
 def index(request):
