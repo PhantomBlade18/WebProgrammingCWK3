@@ -6,12 +6,14 @@
         <br>
         <div id="showmain">
           {% if articles %}
-            {% for a in articles %}
-              <h2>{{a.category}}</h2>
-              <h3>{{a.title}}</h3>
-              <p>{{a.pub_Date}}</p>
-              <p>{{a.body}}</p>
-              <br>
+            {% for c in categories %}
+              <h2>{{c.name}}</h2>
+                {% for a in c.articles.all %}
+                  <h3>{{a.title}}</h3>
+                  <p>{{a.pub_Date}}</p>
+                  <p>{{a.body}}</p>
+                  <br>
+                {% endfor %}
             {% endfor %}
           {% else %}
             <p>No articles are available.</p>

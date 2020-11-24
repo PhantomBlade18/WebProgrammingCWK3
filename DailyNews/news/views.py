@@ -65,8 +65,7 @@ def loggedin(view): #NOTE FOR JAKUB!!! WORK ON THIS YER BLOODY CRETIN
 @loggedin
 def logout(request, user):
     request.session.flush()
-    context = { 'appname': appname }
-    return render(request,'mainapp/logout.html', context)
+    return render(request,'news/index.html')
 
 def loggedin(view): #NOTE FOR JAKUB!!! WORK ON THIS YER BLOODY CRETIN
     ''' Decorator that tests whether user is logged in '''
@@ -83,8 +82,13 @@ def loggedin(view): #NOTE FOR JAKUB!!! WORK ON THIS YER BLOODY CRETIN
 
 def index(request):
     articles = Article.objects.all()
-    context = {'articles': articles}
+    categories = Category.objects.all()
+    context = {'articles': articles , 'categories':categories}
     return render(request,'news/index.html', context)
 
 def signup(request):
     return render(request,'news/register.html')
+
+
+#Helper Methods
+
