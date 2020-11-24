@@ -17,6 +17,17 @@ class Member(User): #This is the user, contains the username and password fields
     DOB = models.DateTimeField()
     favouriteCats = models.ManyToManyField(Category)
 
+    def __str__(self):
+        x = "Name: "+self.get_username()+" Password:  "+self.get_password()+ "Date of Birth: "+ str(self.DOB)+ " Favourite Categories: " +self.getCats() + "\n"
+        return x
+
+    def getCats(self):
+       cats = ""
+       clist = self.favouriteCats.all()
+       for c in clist:
+          cats += (c.name + " , ")
+       return cats
+
 class Article(models.Model):
     title = models.CharField(max_length = 150)
     body = models.TextField(max_length = 3000)
