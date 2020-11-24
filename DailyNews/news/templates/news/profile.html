@@ -1,0 +1,28 @@
+{% extends "news/base.html"%}
+
+{% block content %}
+      <div>
+        <h1>PR</h1>
+        <br>
+        <div id="showmain">
+            {% if member %}
+            <h2>Username: {{member.username}}</h2>
+            <h2>E-mail: {{member.email}}</h2>
+            <h2>Date of Birth: {{member.DOB}}</h2>
+            <h2>Favourite Categories:</h2>
+                {% if member.favouriteCats %}
+            <ul>
+                {% for c in member.favouriteCats %}
+                <li>{{c.name}}</li>
+                {% endfor %}
+            </ul>
+                {% else %}
+                <p>User has no favourite categories</p>
+                {% endif %}
+            {% else %}
+            <p>User does not exist</p>
+            {% endif %}
+
+        </div>
+
+{% endblock %}

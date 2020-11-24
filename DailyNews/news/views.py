@@ -25,7 +25,7 @@ def registerUserView(request):
     else:
         raise Http404('POST data missing')
 
-def login(request):    #HOOK THIS UP TO JS SO THAT IT IS AN AJAX YER CRETIN (SPeaking to you Jakub)
+def login(request):    #HOOK THIS UP TO JS SO THAT IT IS AN AJAX YER CRETIN (Speaking to you Jakub)
     if  request.method == 'GET':
         return render(request,'news/login.html')
     elif not ('username' in request.POST and 'password' in request.POST) and request.method == 'POST':
@@ -43,9 +43,9 @@ def login(request):    #HOOK THIS UP TO JS SO THAT IT IS AN AJAX YER CRETIN (SPe
             # remember user in session variable
             request.session['username'] = username
             request.session['password'] = password
-            context = {
-               'username': username,
-            }
+            articles = Article.objects.all()
+            categories = Category.objects.all()
+            context = {'articles': articles , 'categories':categories,'username': username ,'loggedin': True}
             return render(request, 'news/index.html', context)
         else: 
             raise Http404("Username or Password is Incorrect")
@@ -59,13 +59,16 @@ def loggedin(view): #NOTE FOR JAKUB!!! WORK ON THIS YER BLOODY CRETIN
             except Member.DoesNotExist: raise Http404('Member does not exist')
             return view(request, user)
         else:
-            return render(request,'mainapp/not-logged-in.html',{})
+            return render(request,'news/login.html')
     return mod_view
 
 @loggedin
 def logout(request, user):
     request.session.flush()
-    return render(request,'news/index.html')
+    articles = Article.objects.all()
+    categories = Category.objects.all()
+    context = {'articles': articles , 'categories':categories}
+    return render(request,'news/index.html', context)
 
 def loggedin(view): #NOTE FOR JAKUB!!! WORK ON THIS YER BLOODY CRETIN
     ''' Decorator that tests whether user is logged in '''
@@ -81,9 +84,13 @@ def loggedin(view): #NOTE FOR JAKUB!!! WORK ON THIS YER BLOODY CRETIN
 
 
 def index(request):
+    
     articles = Article.objects.all()
     categories = Category.objects.all()
-    context = {'articles': articles , 'categories':categories}
+    if 'username' in request.session:
+        context = {'articles': articles , 'categories':categories,'username': request.session['username'] ,'loggedin': True}
+    else:
+        context = {'articles': articles , 'categories':categories}
     return render(request,'news/index.html', context)
 
 def signup(request):
@@ -92,3 +99,5 @@ def signup(request):
 
 #Helper Methods
 
+#JAKUBS THINGS TO DO AFTER WORK: IGNORE IF NOT JAKUB
+# Finish sorting the logged in feature. Instead of using the username only, add a logged in dictionary variable
