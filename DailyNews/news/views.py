@@ -5,7 +5,17 @@ from django.http import QueryDict
 from news.models import Category,Member,Article
 import json
 
-# Create your views here.
+def loggedin(view): #NOTE FOR JAKUB!!! WORK ON THIS YER BLOODY CRETIN
+    ''' Decorator that tests whether user is logged in '''
+    def mod_view(request):
+        if 'username' in request.session:
+            username = request.session['username']
+            try: user = Member.objects.get(username=username)
+            except Member.DoesNotExist: raise Http404('Member does not exist')
+            return view(request, user)
+        else:
+            return render(request,'news/login.html')
+    return mod_view
 
 def registerUserView(request):
     if 'username' and 'password' and 'email' and 'dob' in request.POST:
@@ -47,20 +57,8 @@ def login(request):    #HOOK THIS UP TO JS SO THAT IT IS AN AJAX YER CRETIN (Spe
             categories = Category.objects.all()
             context = {'articles': articles , 'categories':categories,'username': username ,'loggedin': True}
             return render(request, 'news/index.html', context)
-        else: 
-            raise Http404("Username or Password is Incorrect")
-
-def loggedin(view): #NOTE FOR JAKUB!!! WORK ON THIS YER BLOODY CRETIN
-    ''' Decorator that tests whether user is logged in '''
-    def mod_view(request):
-        if 'username' in request.session:
-            username = request.session['username']
-            try: user = Member.objects.get(username=username)
-            except Member.DoesNotExist: raise Http404('Member does not exist')
-            return view(request, user)
         else:
-            return render(request,'news/login.html')
-    return mod_view
+            raise Http404("Username or Password is Incorrect")
 
 @loggedin
 def logout(request, user):
@@ -70,21 +68,9 @@ def logout(request, user):
     context = {'articles': articles , 'categories':categories}
     return render(request,'news/index.html', context)
 
-def loggedin(view): #NOTE FOR JAKUB!!! WORK ON THIS YER BLOODY CRETIN
-    ''' Decorator that tests whether user is logged in '''
-    def mod_view(request):
-        if 'username' in request.session:
-            username = request.session['username']
-            try: user = Member.objects.get(username=username)
-            except Member.DoesNotExist: raise Http404('Member does not exist')
-            return view(request, user)
-        else:
-            return render(request,'mainapp/not-logged-in.html',{})
-    return mod_view
-
 
 def index(request):
-    
+
     articles = Article.objects.all()
     categories = Category.objects.all()
     if 'username' in request.session:
@@ -96,12 +82,16 @@ def index(request):
 def signup(request):
     return render(request,'news/register.html')
 
-@loggedin
-def viewProfile(request,user):
 
+@loggedin
+def viewProfile(request, user):
+    username = request.session['username']
+    user = Member.objects.get(username=username)
+    context = {'username': username, 'loggedin': True}
+    return render(request, 'news/profile.html', context)
 
 
 #Helper Methods
 
 #JAKUBS THINGS TO DO AFTER WORK: IGNORE IF NOT JAKUB
-# Finish sorting the logged in feature. Instead of using the username only, add a logged in dictionary variable
+#Finish sorting the logged in feature. Instead of using the username only, add a logged in dictionary variable

@@ -45,12 +45,12 @@
 						<a class="nav-link" href="{% url 'logout' %}">Log out</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{% url 'viewprofile' %}{{username}}">Profile</a>
+						<a class="nav-link" href="{% url 'viewProfile' %}">Profile</a>
 					</li>
+					{%else%}
 					<li class="nav-item">
 						<a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
 					</li>
-					{%else%}
 					<li class="nav-item">
 						<a class="nav-link" href="{% url 'login' %}">Login</a>
 					</li>
@@ -60,10 +60,12 @@
 			</div>
 		</div>
 	</nav>
-	
+
 	<header></header>
 
-
+	<br>
+	<br>
+	<br>
 	<article>
     <div class="container">
       <div class="row">
