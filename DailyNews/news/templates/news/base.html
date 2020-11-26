@@ -45,7 +45,7 @@
 						<a class="nav-link" href="{% url 'logout' %}">Log out</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="">Profile</a>
+						<a class="nav-link" href="{% url 'viewprofile' %}{{username}}">Profile</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
@@ -88,6 +88,6 @@
 
 	<br>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-	<script src="{% static 'mainapp/scripts.js' %}"></script>
+	<script src="{% static 'news/scripts.js' %}"></script>
 </body>
 </html>

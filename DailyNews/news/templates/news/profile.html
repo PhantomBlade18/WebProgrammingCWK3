@@ -2,7 +2,7 @@
 
 {% block content %}
       <div>
-        <h1>PR</h1>
+        <h1>Profile: </h1>
         <br>
         <div id="showmain">
             {% if member %}
@@ -23,6 +23,23 @@
             <p>User does not exist</p>
             {% endif %}
 
+
+        </div>
+        <div id="updateEmail">
+            {% csrf_token %}
+            <div>
+                <label for="email">Update email:</label>
+                <input type="email" id="email" name="email">
+            </div>
+
+        </div>
+
+        <div class="form-group" id="updatePassword">
+            <label for="loginPassf">Current Password</label>
+            <input type="password" class="form-control" id="loginPass" name="currentPassword">
+
+            <label for="loginPassf">New Password</label>
+            <input type="password" class="form-control" id="loginPass" name="newPassword">
         </div>
 
 {% endblock %}

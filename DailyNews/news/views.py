@@ -96,6 +96,10 @@ def index(request):
 def signup(request):
     return render(request,'news/register.html')
 
+@loggedin
+def viewProfile(request,user):
+
+
 
 #Helper Methods
 
