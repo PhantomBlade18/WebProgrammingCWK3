@@ -5,7 +5,7 @@ from django.http import QueryDict
 from news.models import Category,Member,Article
 import json
 
-def loggedin(view): 
+def loggedin(view):
     ''' Decorator that tests whether user is logged in '''
     def mod_view(request):
         if 'username' in request.session:
@@ -116,6 +116,16 @@ def updateCategory(request,user):
         return HttpResponse("")
     else:
         raise Http404("Something went wrong. figure it out")
+
+@loggedin
+def updateImage(request, user):
+    if 'img_file' in request.FILES:
+        image_file = request.FILES['img_file']
+        user.profile_pic = image_file
+        user.save()
+        return HttpResponse(user.profile_pic.url)
+    else:
+        raise Http404('Image file not received')
 
 
 

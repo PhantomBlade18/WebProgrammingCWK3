@@ -34,5 +34,5 @@ $('.category').click(function() {
             }
         })
     }
-    
+
 })
