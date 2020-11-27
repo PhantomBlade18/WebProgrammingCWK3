@@ -97,6 +97,27 @@ def viewProfile(request, user):
     context = {'username': username, 'loggedin': True, 'member': user, 'categories': categories}
     return render(request, 'news/profile.html', context)
 
+@loggedin
+def updateCategory(request,user):
+    if request.method == "PUT":
+        data = QueryDict(request.body)
+        catName = data.get('catName')
+        category = Category.objects.get(name = catName)
+        user.favouriteCats.add(category)
+        user.save()
+        return HttpResponse("")
+
+    elif request.method=="DELETE":
+        data = QueryDict(request.body)
+        catName = data.get('catName')
+        category = Category.objects.get(name = catName)
+        user.favouriteCats.remove(category)
+        user.save()
+        return HttpResponse("")
+    else:
+        raise Http404("Something went wrong. figure it out")
+
+
 
 #Helper Methods
 

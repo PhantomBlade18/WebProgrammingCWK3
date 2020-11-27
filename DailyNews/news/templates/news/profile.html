@@ -11,7 +11,7 @@
             <h2>Date of Birth: </h2><p>{{member.DOB| date:'d/m/Y'}}</p>
             <h2>Favourite Categories:</h2>
             {% if member.favouriteCats.exists %}
-            <ul>
+            <ul id="profileFavCats">
                 {% for c in member.favouriteCats.all %}
                 <li>{{c.name}}</li>
                 {% endfor %}
@@ -37,9 +37,9 @@
             <div class="form-group">
                 {%for cat in categories%}
                 {%if cat in member.favouriteCats.all%}
-                <input type="checkbox" value="{{cat.name}}" name="category" checked />
+                <input class="category" type="checkbox" value="{{cat.name}}" name="category" checked />
                 {%else%}
-                <input type="checkbox" value="{{cat.name}}" name="category"  />
+                <input class="category" type="checkbox" value="{{cat.name}}" name="category"  />
                 {%endif%}
                 <label for="">{{cat.name}}</label>
                 {%endfor%}
