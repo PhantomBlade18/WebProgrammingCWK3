@@ -5,7 +5,7 @@ from django.http import QueryDict
 from news.models import Category,Member,Article
 import json
 
-def loggedin(view): #NOTE FOR JAKUB!!! WORK ON THIS YER BLOODY CRETIN
+def loggedin(view): 
     ''' Decorator that tests whether user is logged in '''
     def mod_view(request):
         if 'username' in request.session:
@@ -27,8 +27,15 @@ def registerUserView(request):
         user.set_password(p)
         try: user.save()
         except IntegrityError: raise Http404('Username '+u+' already taken: Usernames must be unique')
+        articles = Article.objects.all()
+        categories = Category.objects.all()
+        request.session['username'] = username
+        request.session['password'] = password
         context = {
-            'username' : u
+            'username' : u,
+            'articles': articles ,
+            'categories':categories,
+            'loggedin': True
         }
         return render(request,'news/index.html',context)
 
@@ -86,12 +93,11 @@ def signup(request):
 @loggedin
 def viewProfile(request, user):
     username = request.session['username']
-    user = Member.objects.get(username=username)
-    context = {'username': username, 'loggedin': True}
+    categories = Category.objects.all()
+    context = {'username': username, 'loggedin': True, 'member': user, 'categories': categories}
     return render(request, 'news/profile.html', context)
 
 
 #Helper Methods
 
 #JAKUBS THINGS TO DO AFTER WORK: IGNORE IF NOT JAKUB
-#Finish sorting the logged in feature. Instead of using the username only, add a logged in dictionary variable
