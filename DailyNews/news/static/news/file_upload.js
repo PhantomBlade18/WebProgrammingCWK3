@@ -14,7 +14,7 @@ $('#img_file').change(function uploadFile() {
          return xhr;
       },
       type : 'POST',
-      url  : '/updateImage/',
+      url  : 'profile/updateImage/',
       data : formdata,
       success: function(data) {
          $('#profile-img').attr("src",data);
