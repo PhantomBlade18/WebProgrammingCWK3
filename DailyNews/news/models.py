@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
-
 
 class Category(models.Model):
     name = models.CharField(max_length = 50)
@@ -16,6 +14,7 @@ class Member(User): #This is the user, contains the username and password fields
     #Member inherits the email field from USER so not needed. call it using member.email
     DOB = models.DateTimeField()
     favouriteCats = models.ManyToManyField(Category)
+    profile_pic = models.ImageField(null=True, blank=True, upload_to='profile_images')
 
     def __str__(self):
         x = "Name: "+self.get_username()+ "Date of Birth: "+ str(self.DOB)+ " Favourite Categories: " +self.getCats() + "\n"

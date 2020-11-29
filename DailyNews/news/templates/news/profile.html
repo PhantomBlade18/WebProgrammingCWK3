@@ -1,0 +1,160 @@
+{% extends "news/base.html"%}
+{% load static %}
+
+{% block content %}
+
+
+
+      <div class="container">
+        {% if member %}
+        <div class="main-body">
+          <div class="row gutters-sm">
+
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                    {% if member.profile_pic %}
+                    <img id='profile-img' src='{{member.profile_pic.url}}' alt="Admin" class="rounded-circle" width="150"></img>
+                    {% else %}
+                    <img id='profile-img' src="{% static 'news/profile-image.jpg' %}" alt="Admin" class="rounded-circle" width="150"></img>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="card mt-3">
+                <div class="card-body">
+                  <form id='upload_pic' method='POST' action="{% url 'updateImage' %}" enctype='multipart/form-data'>
+                   {% csrf_token %}
+                   <h6 class="mb-0">Update Profile Picture</h6>
+                   <hr>
+                   <input type="file" id="img_file" name="img_file">
+                   <br>
+                   <br>
+                   <input type='submit' value='Update'>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Username</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{member.username}}
+                    </div>
+                  </div>
+
+                  <hr>
+
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Email</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{member.email}}
+                    </div>
+                  </div>
+
+                  <hr>
+
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Date of Birth</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{member.DOB| date:'d/m/Y'}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0" id="straight">Favourite Categories</h6>
+                    </div>
+                  </div>
+                  <hr>
+                  {% if member.favouriteCats.exists %}
+                  <div class="form-group">
+                      {%for cat in categories%}
+                      {%if cat in member.favouriteCats.all%}
+                      <input class="category" type="checkbox" value="{{cat.name}}" name="category" checked />
+                      {%else%}
+                      <input class="category" type="checkbox" value="{{cat.name}}" name="category"  />
+                      {%endif%}
+                      <label for="">{{cat.name}}</label>
+                      {%endfor%}
+                  </div>
+                  {% else %}
+                  <p>User has no favourite categories</p>
+                  {% endif %}
+                </div>
+              </div>
+
+              <div class="card mb-3">
+                <div class="card-body" id="updateEmail">
+                  {% csrf_token %}
+                  <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0" id="straight"><label for="email">Update email</label></h6>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="col-sm-9 text-secondary">
+                    <input type="email" id="email" name="email" value="{{member.email}}">
+                  </div>
+                </div>
+              </div>
+
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0" id="straight">Update Password</h6>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="form-group" id="updatePassword">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0"><label for="loginPassf">Current Password</label></h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <input type="password" class="form-control" id="loginPass" name="currentPassword">
+                    </div>
+                    <br>
+                    <div class="col-sm-3">
+                      <h6 class="mb-0"><label for="loginPassf">New Password</label></h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <input type="password" class="form-control" id="loginPass" name="newPassword">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      {% else %}
+      <p>User does not exist</p>
+      {% endif %}
+    </div>
+
+
+
+
+
+
+
+{% endblock %}

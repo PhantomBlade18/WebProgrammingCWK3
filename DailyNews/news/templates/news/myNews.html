@@ -1,0 +1,26 @@
+{% extends "news/base.html"%}
+
+{% block content %}
+      <div>
+        <h1>News</h1>
+        <br>
+        <div id="showmain">
+          {% if user.favouriteCats.exists %}
+            {% for c in user.favouriteCats.all %}
+              <h2>{{c.name}}</h2>
+                {% for a in articles.all %}
+                {%if a.category == c%}
+                  <h3>{{a.title}}</h3>
+                  <p>{{a.pub_Date}}</p>
+                  <p>{{a.body}}</p>
+                  <br>
+                {%endif%}
+                {% endfor %}
+            {% endfor %}
+          {% else %}
+            <p>You have not selected any favourite articles. Please do so in your profile page</p>
+          {% endif %}
+
+      </div>
+
+{% endblock %}
