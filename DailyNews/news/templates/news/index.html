@@ -7,13 +7,21 @@
         <div id="showmain">
           {% if articles %}
             {% for c in categories %}
-              <h2>{{c.name}}</h2>
+            <div id=" {{c.name}}">
+                <h2>{{c.name}}</h2>
                 {% for a in c.articles.all %}
-                  <h3>{{a.title}}</h3>
-                  <p>{{a.pub_Date}}</p>
-                  <p>{{a.body}}</p>
-                  <br>
+                <div id="{{a.id}}">
+                    <h3>{{a.title}}</h3>
+                    <p>{{a.pub_Date}}</p>
+                    <p>{{a.body}}</p>
+                    <div id="{{a.id}}">
+                        <a id="" class="like-button"> Like</a>
+                        <a class="comment-button">Comment</a>
+                    </div>
+                    <br>
+                </div>
                 {% endfor %}
+            </div>
             {% endfor %}
           {% else %}
             <p>No articles are available.</p>

@@ -127,8 +127,19 @@ def updateImage(request, user):
     else:
         raise Http404('Image file not received')
 
+@loggedin
+def myNews(request,user):
+
+    articles = Article.objects.order_by('-pub_Date')
+    print("Hello World")
+    print(user.favouriteCats.all())
+    if 'username' in request.session:
+        context = {'articles': articles ,'user':user,'username': request.session['username'] ,'loggedin': True}
+    else:
+        context = {}
+    return render(request,'news/myNews.html', context)
+
+def signup(request):
+    return render(request,'news/register.html')
 
 
-#Helper Methods
-
-#JAKUBS THINGS TO DO AFTER WORK: IGNORE IF NOT JAKUB
