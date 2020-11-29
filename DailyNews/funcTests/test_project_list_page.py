@@ -16,7 +16,7 @@ class TestProject(StaticLiveServerTestCase):
         self.browser.get(self.live_server_url)
 
         #finds the signup button on the HTML and clicks it
-        driver.find_element_by_name("signup").click()
+        self.browser.find_element_by_name("signup").click()
 
         #Period of waiitng 5 seconds to allow the page to load
         time.sleep(5)
@@ -38,15 +38,18 @@ class TestProject(StaticLiveServerTestCase):
     def test_project_login_liking_posting_deleting(self):
         self.browser.get(self.live_server_url)
         #Finds the login button and clicks it to redirect to the login page
-        driver.find_element_by_name("login").click()
+        self.browser.find_element_by_name("login").click()
 
         #5 Seconds to allow it to load
         time.sleep(5)
 
         #Finds the 2 inputs needed to login
-        username = self.browser.find_element_by_id("username")
+        username = self.browser.find_element_by_id("loginMember")
         password = self.browser.find_element_by_id("password")
 
         #Sends in the details for the inputs to login
         username.send_keys("BigChungos07")
         password.send_keys("Chungus")
+
+        #user clicks the like buttons
+        self.browser.find_element_by_name("like-button").click()
