@@ -123,7 +123,10 @@ def updateImage(request, user):
         image_file = request.FILES['img_file']
         user.profile_pic = image_file
         user.save()
-        return HttpResponse(user.profile_pic.url)
+        username = request.session['username']
+        categories = Category.objects.all()
+        context = {'username': username, 'loggedin': True, 'member': user, 'categories': categories}
+        return render(request, 'news/profile.html', context)
     else:
         raise Http404('Image file not received')
 
@@ -141,5 +144,3 @@ def myNews(request,user):
 
 def signup(request):
     return render(request,'news/register.html')
-
-
