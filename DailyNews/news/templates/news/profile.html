@@ -15,7 +15,7 @@
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
                     {% if member.profile_pic %}
-                    <img id='profile-img' src='{{member.profile_pic.url}}' alt="Admin" class="rounded-circle" width="150"></img>
+                    <img id='profile-img' src='{{member.profile_pic.url}}' alt="{{member.username}}" class="rounded-circle" width="150"></img>
                     {% else %}
                     <img id='profile-img' src="{% static 'news/profile-image.jpg' %}" alt="Admin" class="rounded-circle" width="150"></img>
                     {% endif %}
