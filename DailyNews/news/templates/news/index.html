@@ -2,13 +2,12 @@
 
 {% block content %}
       <div>
-        <h1>News</h1>
-        <br>
         <div id="showmain">
           {% if articles %}
             {% for c in categories %}
             <div id=" {{c.name}}">
                 <h2>{{c.name}}</h2>
+                <br>
                 {% for a in c.articles.all %}
                 <div id="{{a.id}}">
                     <h3>{{a.title}}</h3>
@@ -21,6 +20,7 @@
                     <br>
                 </div>
                 {% endfor %}
+              <br>
             </div>
             {% endfor %}
           {% else %}

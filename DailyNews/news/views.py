@@ -131,6 +131,14 @@ def updateImage(request, user):
         raise Http404('Image file not received')
 
 @loggedin
+def removeImage(request, user):
+    user.profile_pic.delete()
+    username = request.session['username']
+    categories = Category.objects.all()
+    context = {'username': username, 'loggedin': True, 'member': user, 'categories': categories}
+    return render(request, 'news/profile.html', context)
+
+@loggedin
 def myNews(request,user):
 
     articles = Article.objects.order_by('-pub_Date')
