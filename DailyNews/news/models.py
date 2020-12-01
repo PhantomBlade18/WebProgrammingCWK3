@@ -32,6 +32,10 @@ class Article(models.Model):
     body = models.TextField(max_length = 3000)
     pub_Date = models.DateTimeField()
     category = models.ForeignKey( to=Category,related_name='articles',on_delete=models.CASCADE)
+    likes = models.ManyToManyField(Member,related_name= "likedArticles")
+
+    def no_of_likes(self):
+        return  self.likes.count();
 
     def __str__(self):
         x = "Title: "+self.title + " Body: "+ self.body+ " Published: "+ str(self.pub_Date)+ " Category: " +self.category.name + "\n"

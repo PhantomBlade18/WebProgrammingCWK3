@@ -1,5 +1,5 @@
 
-
+//updates categories in user profile
 $('.category').click(function() {
     var id = $(this).val();
     if ($(this).prop('checked') == true) {
@@ -35,4 +35,30 @@ $('.category').click(function() {
         })
     }
 
+})
+
+//likes an article with given id
+$('.likeArticle').click(function () {
+    var id = $(this).parent().attr("id");
+    console.log(id);
+    $.ajax({
+        method: "POST",
+        url: "likeArticle/",
+        headers: { "X-CSRFToken": $("[name=csrfmiddlewaretoken]").val() },
+        data: {
+            aid: id
+        },
+        success: function (data) {
+            if (data.liked == true) {
+                //$(this).css("background-color", "blue");
+                $(this).html("Unlike");
+            }
+            else if (data.liked == false) {
+                //$(this).css("background-color", "white")
+                $(this).html("Like");
+            };
+            
+
+        }.bind(this)
+    })
 })

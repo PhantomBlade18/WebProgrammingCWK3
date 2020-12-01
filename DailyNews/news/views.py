@@ -1,6 +1,6 @@
 from django.http import HttpResponse,Http404,JsonResponse
 from django.template import loader
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from django.http import QueryDict
 from news.models import Category,Member,Article
 import json
@@ -62,7 +62,7 @@ def login(request):    #HOOK THIS UP TO JS SO THAT IT IS AN AJAX YER CRETIN (Spe
             request.session['password'] = password
             articles = Article.objects.all()
             categories = Category.objects.all()
-            context = {'articles': articles , 'categories':categories,'username': username ,'loggedin': True}
+            context = {'articles': articles , 'categories':categories,'user': member ,'loggedin': True}
             return render(request, 'news/index.html', context)
         else:
             raise Http404("Username or Password is Incorrect")
@@ -81,7 +81,8 @@ def index(request):
     articles = Article.objects.all()
     categories = Category.objects.all()
     if 'username' in request.session:
-        context = {'articles': articles , 'categories':categories,'username': request.session['username'] ,'loggedin': True}
+        user = Member.objects.get(username = request.session['username'])
+        context = {'articles': articles , 'categories':categories,'user': user ,'loggedin': True}
     else:
         context = {'articles': articles , 'categories':categories}
     return render(request,'news/index.html', context)
@@ -152,3 +153,21 @@ def myNews(request,user):
 
 def signup(request):
     return render(request,'news/register.html')
+
+@loggedin
+def LikeArticle(request,user):
+    print("ass")
+    print(request.POST.get('aid'))
+    id = request.POST.get('aid')
+    article = get_object_or_404(Article, pk= id )
+    print("PING!!!!")
+    if article.likes.filter(username = user.get_username()).exists():
+        article.likes.remove(user)
+        context = {'liked': False}
+        print("Deleted")
+    else:
+        article.likes.add(user)
+        context = {'liked': True}
+        print("Added")
+
+    return JsonResponse(context)

@@ -2,31 +2,40 @@
 
 {% block content %}
       <div>
-        <div id="showmain">
-          {% if articles %}
-            {% for c in categories %}
-            <div id=" {{c.name}}">
-                <h2>{{c.name}}</h2>
-                <br>
-                {% for a in c.articles.all %}
-                <div id="{{a.id}}">
-                    <h3>{{a.title}}</h3>
-                    <p>{{a.pub_Date}}</p>
-                    <p>{{a.body}}</p>
-                    <div id="{{a.id}}">
-                        <a id="" class="like-button" name="like-button"> Like</a>
-                        <a class="comment-button">Comment</a>
-                    </div>
-                    <br>
-                </div>
-                {% endfor %}
-              <br>
-            </div>
-            {% endfor %}
-          {% else %}
-            <p>No articles are available.</p>
-          {% endif %}
+          <div id="showmain">
+              {%csrf_token%}
+              {% if articles %}
+              {% for c in categories %}
+              <div id=" {{c.name}}">
+                  <h2>{{c.name}}</h2>
+                  <br>
+                  {% for a in c.articles.all %}
+                  <div id="{{a.id}}">
+                      <h3>{{a.title}}</h3>
+                      <p>{{a.pub_Date}}</p>
+                      <p>{{a.body}}</p>
+                      <div id="{{a.id}}">
+                          {%if user%}
+                          {%if user in a.likes.all %}
+                          <a  id="" class="likeArticle" name="like-button"> Unlike</a>
+                          <a class="comment-button">Comment</a>
+                          {%else%}
+                          <a id="" class="likeArticle" name="like-button"> Like</a>
+                          <a class="comment-button">Comment</a>
+                          {%endif%}
+                          {%endif%}
 
-      </div>
+                      </div>
+                      <br>
+                  </div>
+                  {% endfor %}
+                  <br>
+              </div>
+              {% endfor %}
+              {% else %}
+              <p>No articles are available.</p>
+              {% endif %}
+
+          </div>
 
 {% endblock %}

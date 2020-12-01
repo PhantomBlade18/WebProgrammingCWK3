@@ -13,4 +13,6 @@ urlpatterns = [
     path('profile/updateImage/', views.updateImage, name='updateImage'),
     path('profile/removeImage/', views.removeImage, name='removeImage'),
     path('MyNews/', views.myNews, name='myNews'),
+    path('likeArticle/', views.LikeArticle, name='LikeArticle'),
+    path('MyNews/likeArticle/', views.LikeArticle, name='LikeArticle'),
 ]
