@@ -3,6 +3,8 @@ from django.template import loader
 from django.shortcuts import render,get_object_or_404
 from django.http import QueryDict
 from news.models import Category,Member,Article
+from django.core.mail import send_mail
+from DailyNews.settings import EMAIL_HOST_USER
 import json
 
 def loggedin(view):
@@ -23,14 +25,17 @@ def registerUserView(request):
         p = request.POST['password']
         e = request.POST['email']
         d = request.POST['dob']
-        user = Member(username=u,email = e, DOB = d)
+        user = Member(username = u, email = e, DOB = d)
         user.set_password(p)
         try: user.save()
-        except IntegrityError: raise Http404('Username '+u+' already taken: Usernames must be unique')
+        except IntegrityError: raise Http404('Username ' +u+' already taken: Usernames must be unique')
         articles = Article.objects.all()
         categories = Category.objects.all()
-        request.session['username'] = username
-        request.session['password'] = password
+        request.session['username'] = u
+        request.session['password'] = p
+        subject = 'Welcome to DailyNews!'
+        message = 'Welcome, ' + u + '! Thank you for signing up to DailyNews!'
+        send_mail(subject, message, EMAIL_HOST_USER, [e], fail_silently = False)
         context = {
             'username' : u,
             'articles': articles ,
