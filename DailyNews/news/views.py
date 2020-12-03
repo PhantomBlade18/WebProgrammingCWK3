@@ -47,7 +47,7 @@ def registerUserView(request):
     else:
         raise Http404('POST data missing')
 
-def login(request):    #HOOK THIS UP TO JS SO THAT IT IS AN AJAX YER CRETIN (Speaking to you Jakub)
+def login(request):    
     if  request.method == 'GET':
         return render(request,'news/login.html')
     elif not ('username' in request.POST and 'password' in request.POST) and request.method == 'POST':
@@ -161,11 +161,9 @@ def signup(request):
 
 @loggedin
 def LikeArticle(request,user):
-    print("ass")
     print(request.POST.get('aid'))
     id = request.POST.get('aid')
     article = get_object_or_404(Article, pk= id )
-    print("PING!!!!")
     if article.likes.filter(username = user.get_username()).exists():
         article.likes.remove(user)
         context = {'liked': False}

@@ -40,3 +40,15 @@ class Article(models.Model):
     def __str__(self):
         x = "Title: "+self.title + " Body: "+ self.body+ " Published: "+ str(self.pub_Date)+ " Category: " +self.category.name + "\n"
         return x
+
+
+class Comment(models.Model):
+    article = models.ForeignKey(to=Article,related_name='comments',null=True,on_delete=models.CASCADE)  #binds the comment to a specific article
+    author = models.ForeignKey(to=Member,related_name='comments',on_delete=models.CASCADE)  #stores the username of the author of the comment
+    reply = models.ForeignKey('self', on_delete=models.CASCADE, null=True, related_name='replies' ) # stores the id of the comment it is replying to, if not a reply then can obviously be left as blank
+    text = models.CharField(max_length= 500)    #Self explanatory
+
+    def __str__(self):
+        x =  " author: "+ self.author.username+ " replied to: "+ str(self.reply)+ " text: " +self.text + "\n"
+        return x
+
