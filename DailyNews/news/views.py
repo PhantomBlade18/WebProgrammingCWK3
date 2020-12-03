@@ -2,7 +2,7 @@ from django.http import HttpResponse,Http404,JsonResponse
 from django.template import loader
 from django.shortcuts import render,get_object_or_404
 from django.http import QueryDict
-from news.models import Category,Member,Article
+from news.models import Category,Member,Article,Comment
 from django.core.mail import send_mail
 from DailyNews.settings import EMAIL_HOST_USER
 import json
@@ -174,3 +174,39 @@ def LikeArticle(request,user):
         print("Added")
 
     return JsonResponse(context)
+
+#Add Comment/reply
+@loggedin
+def addComment(request,user):
+    if 'aid' and 'text'  in request.POST :
+            aid = request.POST['aid']
+            body = request.POST['text']
+            a = Article.objects.get(pk=aid)
+            comment = Comment(article=a,author=user,text=body)
+            comment.save()
+            context= {
+                'id':comment.id,
+                'text':body,
+                'author': comment.author.username
+                }
+            return JsonResponse(context)
+    else:
+        raise Http404("Missing Information in Form")
+
+@loggedin
+def addReply(request,user):
+    return
+#Delete comment/reply
+@loggedin
+def deleteComment(request,user):
+    return
+@loggedin
+def deleteReply(request,user):
+    return
+#Update comment/reply
+@loggedin
+def updateComment(request,user):
+    return
+@loggedin
+def updateReply(request,user):
+    return

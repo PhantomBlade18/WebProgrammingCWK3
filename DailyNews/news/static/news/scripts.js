@@ -62,3 +62,25 @@ $('.likeArticle').click(function () {
         }.bind(this)
     })
 })
+
+$('.submitComment').click(function () {
+    var id = $(this).parent().parent().attr("id");
+    console.log(id);
+    var body = $(this).siblings("textarea").val();
+    console.log(body);
+    $.ajax({
+        method: "POST",
+        url: "addComment/",
+        headers: { "X-CSRFToken": $("[name=csrfmiddlewaretoken]").val() },
+        data: {
+            aid: id,
+            text:body
+        },
+        success: function (data) {
+            var obj = data;
+            $(this).parent().parent().children('.comments').append('<div class="comment" id = "' + obj.id + '" ><p>' + obj.author + ' posted</p><p>' + obj.text + '</p></div>');
+
+
+        }.bind(this)
+    })
+})
