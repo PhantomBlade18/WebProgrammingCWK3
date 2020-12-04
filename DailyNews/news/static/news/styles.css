@@ -5,5 +5,39 @@ ul.fav {
 }
 
 input.category {
-  vertical-align: 
+  vertical-align:
+}
+
+.category-title{
+  font-weight: bold;
+  margin-bottom: auto;
+
+}
+
+.date-meta{
+  font-style: italic;
+  color:#868e96;
+}
+
+.commentor-meta{
+  font-style: italic;
+  margin-top:0;
+  margin-bottom:0;
+}
+
+.comment-meta{
+  font-style: italic;
+  margin-top:0;
+  color:#868e96
+}
+
+
+.body-meta{
+font-weight: lighter;
+font-size: 18px;
+}
+
+.reply-title{
+  font-style: italic;
+  font-size: 12px;
 }
