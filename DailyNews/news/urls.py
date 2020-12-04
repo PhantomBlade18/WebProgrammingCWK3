@@ -17,4 +17,6 @@ urlpatterns = [
     path('MyNews/likeArticle/', views.LikeArticle, name='LikeArticle'),
     path('addComment/', views.addComment, name='AddComment'),
     path('addReply/', views.addReply, name='AddReply'),
+    path('deleteComment/', views.deleteComment, name='DeleteComment'),
+    path('deleteReply/', views.deleteReply, name='DeleteReply'),
 ]

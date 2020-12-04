@@ -78,7 +78,70 @@ $('.submitComment').click(function () {
         },
         success: function (data) {
             var obj = data;
-            $(this).parent().parent().children('.comments').append('<div class="comment" id = "' + obj.id + '" ><p>' + obj.author + ' posted</p><p>' + obj.text + '</p></div>');
+            $(this).parent().parent().children('.comments').append('<div class="comment" id = "' + obj.id + '" ><p class="commentor-meta">' + obj.author + ' posted</p><p class="comment-meta">' + obj.text + '</p></div>');
+
+
+        }.bind(this)
+    })
+})
+$('.submitReply').click(function () {
+    var id = $(this).parent().parent().attr("id");
+    console.log(id);
+    var body = $(this).siblings("textarea").val();
+    console.log(body);
+    $.ajax({
+        method: "POST",
+        url: "addReply/",
+        headers: { "X-CSRFToken": $("[name=csrfmiddlewaretoken]").val() },
+        data: {
+            cid: id,
+            text: body
+        },
+        success: function (data) {
+            var obj = data;
+            $(this).parent().parent().children('.replies').append('<div class="reply" id = "' + obj.id + '" ><p class="commentor-meta">' + obj.author + ' replied</p><p class="comment-meta">' + obj.text + '</p></div>');
+
+
+        }.bind(this)
+    })
+})
+
+$('.deleteComment').click(function () {
+    var id = $(this).parent().attr("id");
+    console.log(id);
+    $.ajax({
+        method: "DELETE",
+        url: "deleteComment/",
+        headers: { "X-CSRFToken": $("[name=csrfmiddlewaretoken]").val() },
+        data: {
+            cid: id,
+            
+        },
+        success: function (data) {
+            var obj = data;
+            $(this).parent().parent().children('.comments').append('<p> Comment Deleted! </p>');
+            $(this).parent().remove();
+
+
+        }.bind(this)
+    })
+})
+
+$('.deleteReply').click(function () {
+    var id = $(this).parent().attr("id");
+    console.log(id);
+    $.ajax({
+        method: "DELETE",
+        url: "deleteReply/",
+        headers: { "X-CSRFToken": $("[name=csrfmiddlewaretoken]").val() },
+        data: {
+            rid: id,
+
+        },
+        success: function (data) {
+            var obj = data;
+            $(this).parent().parent().children('.replies').append('<p> Comment Deleted! </p>');
+            $(this).parent().remove();
 
 
         }.bind(this)

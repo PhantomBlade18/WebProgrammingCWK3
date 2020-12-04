@@ -179,6 +179,7 @@ def LikeArticle(request,user):
 @loggedin
 def addComment(request,user):
     if 'aid' and 'text'  in request.POST :
+            print(request.POST['aid'])
             aid = request.POST['aid']
             body = request.POST['text']
             a = Article.objects.get(pk=aid)
@@ -195,14 +196,41 @@ def addComment(request,user):
 
 @loggedin
 def addReply(request,user):
-    return
+    if 'cid' and 'text'  in request.POST :
+            cid = request.POST['cid']
+            body = request.POST['text']
+            c =Comment.objects.get(pk=cid)
+            rep = Comment(author=user,reply= c, text=body)
+            rep.save()
+            context= {
+                'id':rep.id,
+                'text':body,
+                'author': rep.author.username
+                }
+            return JsonResponse(context)
+    else:
+        raise Http404("Missing Information in Form")
 #Delete comment/reply
 @loggedin
 def deleteComment(request,user):
-    return
+    if request.method=="DELETE":
+        data = QueryDict(request.body)
+        id = data.get('cid')
+        comment = Comment.objects.get(pk = id)
+        comment.delete()
+        return HttpResponse("")
+    else:
+        raise Http404("Invalid Request")
 @loggedin
 def deleteReply(request,user):
-    return
+    if request.method=="DELETE":
+        data = QueryDict(request.body)
+        id = data.get('rid')
+        comment = Comment.objects.get(pk = id)
+        comment.delete()
+        return HttpResponse("")
+    else:
+        raise Http404("Invalid Request")
 #Update comment/reply
 @loggedin
 def updateComment(request,user):
