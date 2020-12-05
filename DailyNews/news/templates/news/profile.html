@@ -109,42 +109,40 @@
 
               <div class="card mb-3">
                 <div class="card-body" id="updateEmail">
-                  {% csrf_token %}
                   <div class="row">
                     <div class="col-sm-3">
-                        <h6 class="mb-0" id="straight"><label for="email">Update email</label></h6>
+                      <h6 class="mb-0" id="straight">Update Email</h6>
                     </div>
                   </div>
                   <hr>
-                  <div class="col-sm-9 text-secondary">
+                  <form id='updateEmail' method='POST' action="{% url 'updateEmail' %}">
+                    {% csrf_token %}
                     <input type="email" id="email" name="email" value="{{member.email}}">
-                  </div>
+                    <br>
+                    <br>
+                    <input class="btn btn-secondary btn-sm" type='submit' value='Submit'>
+                  </form>
                 </div>
               </div>
 
               <div class="card mb-3">
-                <div class="card-body">
+                <div class="card-body" id="update Password">
                   <div class="row">
                     <div class="col-sm-3">
                       <h6 class="mb-0" id="straight">Update Password</h6>
                     </div>
                   </div>
                   <hr>
-                  <div class="form-group" id="updatePassword">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0"><label for="loginPassf">Current Password</label></h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      <input type="password" class="form-control" id="loginPass" name="currentPassword">
-                    </div>
+                  <form id='updatePassword' method='POST' action="{% url 'updatePassword' %}">
+                    {% csrf_token %}
+                    <h6 class="mb-0"><label for="loginPassf">Current Password</label></h6>
+                    <input type="password" class="form-control" id="loginPass" name="currentPassword">
                     <br>
-                    <div class="col-sm-3">
-                      <h6 class="mb-0"><label for="loginPassf">New Password</label></h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      <input type="password" class="form-control" id="loginPass" name="newPassword">
-                    </div>
-                  </div>
+                    <h6 class="mb-0"><label for="loginPassf">New Password</label></h6>
+                    <input type="password" class="form-control" id="loginPass" name="newPassword">
+                    <br>
+                    <input class="btn btn-secondary btn-sm" type='submit' value='Submit'>
+                  </form>
                 </div>
               </div>
 

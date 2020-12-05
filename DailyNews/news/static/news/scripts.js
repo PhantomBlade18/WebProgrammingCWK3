@@ -37,6 +37,40 @@ $('.category').click(function() {
 
 })
 
+$('.email').click(function() {
+    var id = $(this).val();
+    if ($(this).prop('checked') == true) {
+        $.ajax({
+            method: "POST",
+            url: 'profile/updateEmail/',
+            headers: { "X-CSRFToken": $("[name=csrfmiddlewaretoken]").val() },
+            data: {
+                email: id,
+            },
+            success: function (data) {
+                console.log(id + " updated!");
+            }
+        })
+    }
+}
+
+$('.password').click(function() {
+    var id = $(this).val();
+    if ($(this).prop('checked') == true) {
+        $.ajax({
+            method: "POST",
+            url: 'profile/updatePassword/',
+            headers: { "X-CSRFToken": $("[name=csrfmiddlewaretoken]").val() },
+            data: {
+                password: id,
+            },
+            success: function (data) {
+                console.log(id + " updated!");
+            }
+        })
+    }
+}
+
 //likes an article with given id
 $('.likeArticle').click(function () {
     var id = $(this).parent().attr("id");
@@ -57,7 +91,7 @@ $('.likeArticle').click(function () {
                 //$(this).css("background-color", "white")
                 $(this).html("Like");
             };
-            
+
 
         }.bind(this)
     })
@@ -115,7 +149,7 @@ $('.deleteComment').click(function () {
         headers: { "X-CSRFToken": $("[name=csrfmiddlewaretoken]").val() },
         data: {
             cid: id,
-            
+
         },
         success: function (data) {
             var obj = data;
