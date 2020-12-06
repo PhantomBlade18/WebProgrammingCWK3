@@ -21,4 +21,10 @@ urlpatterns = [
     path('addReply/', views.addReply, name='AddReply'),
     path('deleteComment/', views.deleteComment, name='DeleteComment'),
     path('deleteReply/', views.deleteReply, name='DeleteReply'),
+    path('updateComment/', views.updateComment, name='UpdateComment'), #No need for Update Reply as they are identical in what happens
+    path('MyNews/addComment/', views.addComment, name='AddComment'),
+    path('MyNews/addReply/', views.addReply, name='AddReply'),
+    path('MyNews/deleteComment/', views.deleteComment, name='DeleteComment'),
+    path('MyNews/deleteReply/', views.deleteReply, name='DeleteReply'),
+    path('MyNews/updateComment/', views.updateComment, name='UpdateComment')
 ]

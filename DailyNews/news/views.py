@@ -262,7 +262,14 @@ def deleteReply(request,user):
 #Update comment/reply
 @loggedin
 def updateComment(request,user):
-    return
-@loggedin
-def updateReply(request,user):
-    return
+    if request.method=="PUT":
+        data = QueryDict(request.body)
+        id = data.get('cid')
+        body =data.get('text')
+        comment = Comment.objects.get(pk = id)
+        comment.text = body
+        comment.save()
+        context = {'text': comment.text}
+        return JsonResponse(context)
+    else:
+        raise Http404("Invalid Request")

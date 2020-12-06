@@ -1,4 +1,30 @@
+$(document).ready(function () {
+    $('.comments').hide();
+    $('.commentForm').hide();
+    $('.replies').hide();
+    $('.ReplyForm').hide();
+    $('.response').hide();
+    $('.editCommentForm').hide();
 
+})
+
+$('.comment-button').click(function () {
+    $(this).siblings('.comments').show();
+    $(this).siblings('.commentForm').show();
+})
+$('.Reply').click(function () {
+    $(this).siblings('.replies').show();
+    $(this).siblings('.ReplyForm').show();
+})
+$('.ResponseReply').click(function () {
+    $(this).parent().siblings('.response').show();
+})
+$('.editCommentbtn').click(function () {
+    $(this).siblings('.editCommentForm').show();
+})
+$('.editReplybtn').click(function () {
+    $(this).siblings('.editCommentForm').show();
+})
 //updates categories in user profile
 $('.category').click(function() {
     var id = $(this).val();
@@ -105,7 +131,7 @@ $('.likeArticle').click(function () {
 })
 
 $('.submitComment').click(function () {
-    var id = $(this).parent().parent().attr("id");
+    var id = $(this).parent().parent().parent().attr("id");
     console.log(id);
     var body = $(this).siblings("textarea").val();
     console.log(body);
@@ -119,7 +145,8 @@ $('.submitComment').click(function () {
         },
         success: function (data) {
             var obj = data;
-            $(this).parent().parent().children('.comments').append('<div class="comment" id = "' + obj.id + '" ><p class="commentor-meta">' + obj.author + ' posted</p><p class="comment-meta">' + obj.text + '</p></div>');
+
+            $(this).parent().siblings('.comments').append('<div class="comment" id = "' + obj.id + '" ><p class="commentor-meta">' + obj.author + ' posted</p><p class="comment-meta">' + obj.text + '</p></div>');
 
 
         }.bind(this)
@@ -140,8 +167,8 @@ $('.submitReply').click(function () {
         },
         success: function (data) {
             var obj = data;
-            $(this).parent().parent().children('.replies').append('<div class="reply" id = "' + obj.id + '" ><p class="commentor-meta">' + obj.author + ' replied</p><p class="comment-meta">' + obj.text + '</p></div>');
-
+            $(this).parent().siblings('.replies').append('<div class="reply" id = "' + obj.id + '" ><p class="commentor-meta">' + obj.author + ' replied</p><p class="comment-meta">' + obj.text + '</p></div>');
+            $(this).parent().hide();
 
         }.bind(this)
     })
@@ -183,6 +210,51 @@ $('.deleteReply').click(function () {
             var obj = data;
             $(this).parent().parent().children('.replies').append('<p> Comment Deleted! </p>');
             $(this).parent().remove();
+
+
+        }.bind(this)
+    })
+})
+
+$('.editComment').click(function () {
+    var id = $(this).parent().parent().attr("id");
+    console.log(id);
+    var body = $(this).siblings("textarea").val();
+    console.log(body);
+    $.ajax({
+        method: "PUT",
+        url: "updateComment/",
+        headers: { "X-CSRFToken": $("[name=csrfmiddlewaretoken]").val() },
+        data: {
+            cid: id,
+            text: body
+        },
+        success: function (data) {
+            var obj = data;
+            $(this).parent().siblings('.commentText').text(obj.text);
+            $(this).parent().hide();
+
+        }.bind(this)
+    })
+})
+
+$('.ReplyResponse').click(function () {
+    var id = $(this).parent().attr("id");
+    console.log(id);
+    var body = $(this).siblings("textarea").val();
+    console.log(body);
+    $.ajax({
+        method: "POST",
+        url: "addReply/",
+        headers: { "X-CSRFToken": $("[name=csrfmiddlewaretoken]").val() },
+        data: {
+            cid: id,
+            text: body
+        },
+        success: function (data) {
+            var obj = data;
+            $(this).parent().parent().children().append('<div class="reply" id = "' + obj.id + '" ><p class="commentor-meta">' + obj.author + ' replied</p><p class="comment-meta">' + obj.text + '</p></div>');
+            $(this).parent().hide();
 
 
         }.bind(this)

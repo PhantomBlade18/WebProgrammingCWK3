@@ -1,39 +1,30 @@
 {% extends "news/base.html"%}
 
 {% block content %}
-      <div>
-        <h1>News</h1>
+<div id="showmain">
+
+
+    {%csrf_token%}
+    {% if user.favouriteCats.exists %}
+    {% for c in user.favouriteCats.all %}
+    <div id="{{c.name}}">
+        <h1 class="category-title">{{c.name}}</h1>
         <br>
-        <div id="showmain">
-            {%csrf_token%}
-            {% if user.favouriteCats.exists %}
-            {% for c in user.favouriteCats.all %}
-            <h2>{{c.name}}</h2>
-            {% for a in articles.all %}
-            {%if a.category == c%}
-            <h3>{{a.title}}</h3>
-            <p>{{a.pub_Date}}</p>
-            <p>{{a.body}}</p>
-            <div id="{{a.id}}">
-                {%if user%}
-                {%if user in a.likes.all %}
-                <a id="" class="likeArticle" name="like-button"> Unlike</a>
-                <a class="comment-button">Comment</a>
-                {%else%}
-                <a id="" class="likeArticle" name="like-button"> Like</a>
-                <a class="comment-button">Comment</a>
-                {%endif%}
-                {%endif%}
-
-            </div>
-            <br>
-            {%endif%}
-            {% endfor %}
-            {% endfor %}
-            {% else %}
-            <p>You have not selected any favourite articles. Please do so in your profile page</p>
-            {% endif %}
-
+        {% for a in articles.all %}
+        {%if a.category == c%}
+        <div id="{{a.id}}">
+        {%include "news/commentSection.html"%}
         </div>
+        <br>
+        {%endif%}
+        {% endfor %}
+
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>You have not selected any favourite articles. Please do so in your profile page</p>
+    {% endif %}
+
+</div>
 
 {% endblock %}
