@@ -47,7 +47,7 @@ def registerUserView(request):
     else:
         raise Http404('POST data missing')
 
-def login(request):    
+def login(request):
     if  request.method == 'GET':
         return render(request,'news/login.html')
     elif not ('username' in request.POST and 'password' in request.POST) and request.method == 'POST':
@@ -80,9 +80,7 @@ def logout(request, user):
     context = {'articles': articles , 'categories':categories}
     return render(request,'news/index.html', context)
 
-
 def index(request):
-
     articles = Article.objects.all()
     categories = Category.objects.all()
     if 'username' in request.session:
@@ -94,7 +92,6 @@ def index(request):
 
 def signup(request):
     return render(request,'news/register.html')
-
 
 @loggedin
 def viewProfile(request, user):
@@ -112,7 +109,6 @@ def updateCategory(request,user):
         user.favouriteCats.add(category)
         user.save()
         return HttpResponse("")
-
     elif request.method=="DELETE":
         data = QueryDict(request.body)
         catName = data.get('catName')
@@ -121,7 +117,37 @@ def updateCategory(request,user):
         user.save()
         return HttpResponse("")
     else:
-        raise Http404("Something went wrong. figure it out")
+        raise Http404("Something went wrong. Figure it out")
+
+@loggedin
+def updateEmail(request, user):
+    if request.method == "POST":
+        email = request.POST['email']
+        user.email = email
+        user.save()
+        username = request.session['username']
+        categories = Category.objects.all()
+        context = {'username': username, 'loggedin': True, 'member': user, 'categories': categories}
+        return render(request, 'news/profile.html', context)
+    else:
+        raise Http404("Something went wrong.")
+
+@loggedin
+def updatePassword(request, user):
+    if request.method == "POST":
+        cpassword = request.POST['currentPassword']
+        npassword = request.POST['newPassword']
+        if user.check_password(cpassword):
+            user.set_password(npassword)
+            user.save()
+            username = request.session['username']
+            categories = Category.objects.all()
+            context = {'username': username, 'loggedin': True, 'member': user, 'categories': categories}
+            return render(request, 'news/profile.html', context)
+        else:
+            raise Http404("Current password is incorrect.")
+    else:
+        raise Http404("Something went wrong.")
 
 @loggedin
 def updateImage(request, user):
@@ -146,7 +172,6 @@ def removeImage(request, user):
 
 @loggedin
 def myNews(request,user):
-
     articles = Article.objects.order_by('-pub_Date')
     print("Hello World")
     print(user.favouriteCats.all())
@@ -210,6 +235,7 @@ def addReply(request,user):
             return JsonResponse(context)
     else:
         raise Http404("Missing Information in Form")
+
 #Delete comment/reply
 @loggedin
 def deleteComment(request,user):
@@ -231,6 +257,7 @@ def deleteReply(request,user):
         return HttpResponse("")
     else:
         raise Http404("Invalid Request")
+
 #Update comment/reply
 @loggedin
 def updateComment(request,user):
