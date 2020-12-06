@@ -5,159 +5,164 @@
 
 
 
-      <div class="container">
-        {% if member %}
-        <div class="main-body">
-          <div class="row gutters-sm">
+<div class="container">
+    {% if member %}
+    <div class="main-body">
+        <div class="row gutters-sm">
 
             <div class="col-md-4 mb-3 container-profile">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex flex-column align-items-center text-center">
-                    {% if member.profile_pic %}
-                    <img id='profile-img' src='{{member.profile_pic.url}}' alt="Admin" class="rounded-circle" width="150"></img>
-                    <br>
-                    <a class = "btn btn-outline-primary" href="{% url 'removeImage' %}">Remove Photo</a>
-                    {% else %}
-                    <img id='profile-img' src="{% static 'news/profile-image.jpg' %}" alt="Admin" class="rounded-circle" width="150"></img>
-                    {% endif %}
-                  </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            {% if member.profile_pic %}
+                            <img id='profile-img' src='{{member.profile_pic.url}}' alt="Admin" class="rounded-circle" width="150"></img>
+                            <br>
+                            <a class="btn btn-outline-primary" href="{% url 'removeImage' %}">Remove Photo</a>
+                            {% else %}
+                            <img id='profile-img' src="{% static 'news/profile-image.jpg' %}" alt="Admin" class="rounded-circle" width="150"></img>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
-              </div>
 
 
-              <div class="card mt-3">
-                <div class="card-body">
-                  <form class="align-items-center text-center"id='upload_pic' method='POST' action="{% url 'updateImage' %}" enctype='multipart/form-data'>
-                   {% csrf_token %}
-                   <h6 class="mb-0">Update Profile Picture</h6>
-                   <hr>
-                   <label class="inputlabel"> Click to Upload
-                   <input class ="inputfilebutton" type="file" id="img_file" name="img_file">
-                   </label>
-                   <br>
-                   <br>
-                   <input class="btn btn-secondary btn-sm" type='submit' value='Submit'>
-                  </form>
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <form class="align-items-center text-center" id='upload_pic' method='POST' action="{% url 'updateImage' %}" enctype='multipart/form-data'>
+                            {% csrf_token %}
+                            <h6 class="mb-0">Update Profile Picture</h6>
+                            <hr>
+                            <label class="inputlabel">
+                                Click to Upload
+                                <input class="inputfilebutton" type="file" id="img_file" name="img_file">
+                            </label>
+                            <br>
+                            <br>
+                            <input class="btn btn-secondary btn-sm" type='submit' value='Submit'>
+                        </form>
+                    </div>
                 </div>
-              </div>
             </div>
 
 
 
             <div class="col-md-8 container-profile">
-              <div class="card mb-3">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Username</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      {{member.username}}
-                    </div>
-                  </div>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Username</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {{member.username}}
+                            </div>
+                        </div>
 
-                  <hr>
+                        <hr>
 
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Email</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      {{member.email}}
-                    </div>
-                  </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Email</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {{member.email}}
+                            </div>
+                        </div>
 
-                  <hr>
+                        <hr>
 
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Date of Birth</h6>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Date of Birth</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {{member.DOB| date:'d/m/Y'}}
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-sm-9 text-secondary">
-                      {{member.DOB| date:'d/m/Y'}}
-                    </div>
-                  </div>
                 </div>
-              </div>
 
-              <div class="card mb-3">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0" id="straight">Favourite Categories</h6>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0" id="straight">Favourite Categories</h6>
+                            </div>
+                        </div>
+                        <hr>
+                        {% if member.favouriteCats.exists %}
+                        {%for cat in categories%}
+                        {%if cat in member.favouriteCats.all%}
+                        <div>
+                            <input class="category" type="checkbox" value="{{cat.name}}" name="category" checked />
+                            {%else%}
+                            <div>
+                                <input class="category" type="checkbox" value="{{cat.name}}" name="category" />
+                                {%endif%}
+                                <label for="">{{cat.name}}</label>
+                            </div>
+                            {%endfor%}
+                            {% else %}
+                            {%for cat in categories%}
+                            <div>
+                                <input class="category" type="checkbox" value="{{cat.name}}" name="category" />
+                                <label for="">{{cat.name}}</label>
+                            </div>
+                            {%endfor%}
+                            {% endif %}
+                        </div>
                     </div>
-                  </div>
-                  <hr>
-                  {% if member.favouriteCats.exists %}
-                      {%for cat in categories%}
-                      {%if cat in member.favouriteCats.all%}
-                      <div>
-                        <input class="category" type="checkbox" value="{{cat.name}}" name="category" checked />
-                      {%else%}
-                      <div>
-                        <input class="category" type="checkbox" value="{{cat.name}}" name="category"  />
-                      {%endif%}
-                      <label for="">{{cat.name}}</label>
-                      </div>
-                      {%endfor%}
-                  {% else %}
-                  <p>User has no favourite categories</p>
-                  {% endif %}
-                </div>
-              </div>
 
-              <div class="card mb-3">
-                <div class="card-body" id="updateEmail">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0" id="straight">Update Email</h6>
+                    <div class="card mb-3">
+                        <div class="card-body" id="updateEmail">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0" id="straight">Update Email</h6>
+                                </div>
+                            </div>
+                            <hr>
+                            <form id='updateEmail' method='POST' action="{% url 'updateEmail' %}">
+                                {% csrf_token %}
+                                <input type="email" id="email" name="email" value="{{member.email}}">
+                                <br>
+                                <br>
+                                <button class="btn btn-secondary btn-sm" id="ChangeEmail" type='button'>Submit </button>
+                            </form>
+                        </div>
                     </div>
-                  </div>
-                  <hr>
-                  <form id='updateEmail' method='POST' action="{% url 'updateEmail' %}">
-                    {% csrf_token %}
-                    <input type="email" id="email" name="email" value="{{member.email}}">
-                    <br>
-                    <br>
-                    <input class="btn btn-secondary btn-sm" type='submit' value='Submit'>
-                  </form>
-                </div>
-              </div>
 
-              <div class="card mb-3">
-                <div class="card-body" id="update Password">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0" id="straight">Update Password</h6>
+                    <div class="card mb-3">
+                        <div class="card-body" id="update Password">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0" id="straight">Update Password</h6>
+                                </div>
+                            </div>
+                            <hr>
+                            <form id='updatePassword' method='POST' action="{% url 'updatePassword' %}">
+                                {% csrf_token %}
+                                <h6 class="mb-0"><label for="loginPassf">Current Password</label></h6>
+                                <input type="password" class="form-control" id="loginPass" name="currentPassword">
+                                <br>
+                                <h6 class="mb-0"><label for="loginPassf">New Password</label></h6>
+                                <input type="password" class="form-control" id="loginPass" name="newPassword">
+                                <br>
+                                <button class="btn btn-secondary btn-sm" id="ChangePassword" type='button'>Submit </button>
+                            </form>
+                        </div>
                     </div>
-                  </div>
-                  <hr>
-                  <form id='updatePassword' method='POST' action="{% url 'updatePassword' %}">
-                    {% csrf_token %}
-                    <h6 class="mb-0"><label for="loginPassf">Current Password</label></h6>
-                    <input type="password" class="form-control" id="loginPass" name="currentPassword">
-                    <br>
-                    <h6 class="mb-0"><label for="loginPassf">New Password</label></h6>
-                    <input type="password" class="form-control" id="loginPass" name="newPassword">
-                    <br>
-                    <input class="btn btn-secondary btn-sm" type='submit' value='Submit'>
-                  </form>
-                </div>
-              </div>
 
+                </div>
             </div>
-          </div>
         </div>
-      {% else %}
-      <p>User does not exist</p>
-      {% endif %}
+        {% else %}
+        <p>User does not exist</p>
+        {% endif %}
     </div>
 
 
+    {% endblock %}
 
 
 
-
-
-{% endblock %}
+    

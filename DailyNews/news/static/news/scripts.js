@@ -37,39 +37,46 @@ $('.category').click(function() {
 
 })
 
-$('.email').click(function() {
-    var id = $(this).val();
-    if ($(this).prop('checked') == true) {
-        $.ajax({
-            method: "POST",
-            url: 'profile/updateEmail/',
-            headers: { "X-CSRFToken": $("[name=csrfmiddlewaretoken]").val() },
-            data: {
-                email: id,
-            },
-            success: function (data) {
-                console.log(id + " updated!");
-            }
-        })
-    }
-}
+$('#ChangeEmail').click(function (e) {
+    e.preventDefault();
+    var nemail = $('input[name=currentPassword]').val()
+    $.ajax({
+        method: "POST",
+        url: 'updateEmail/',
+        headers: { "X-CSRFToken": $("[name=csrfmiddlewaretoken]").val() },
+        data: {
+            email: nemail,
+        },
+        success: function (data) {
+            console.log(id + " updated!");
+        }
+    })
+})
 
-$('.password').click(function() {
-    var id = $(this).val();
-    if ($(this).prop('checked') == true) {
-        $.ajax({
-            method: "POST",
-            url: 'profile/updatePassword/',
-            headers: { "X-CSRFToken": $("[name=csrfmiddlewaretoken]").val() },
-            data: {
-                password: id,
-            },
-            success: function (data) {
-                console.log(id + " updated!");
+$('#ChangePassword').click(function (e) {
+    e.preventDefault();
+    var cPass = $('input[name=currentPassword]').val()
+    var nPass = $('input[name=newPassword]').val()
+    console.log("Check check")
+    $.ajax({
+        method: "POST",
+        url: 'updatePassword/',
+        headers: { "X-CSRFToken": $("[name=csrfmiddlewaretoken]").val() },
+        data: {
+            currentPassword: cPass,
+            newPassword: nPass,
+        },
+        success: function (data) {
+            if (data.successful == true) {
+                alert(data.message);
+
             }
-        })
-    }
-}
+            else if (data.successful == false) {
+                alert(data.message);
+            }
+        }
+    })
+})
 
 //likes an article with given id
 $('.likeArticle').click(function () {

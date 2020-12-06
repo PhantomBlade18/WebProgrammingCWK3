@@ -97,7 +97,7 @@ def signup(request):
 def viewProfile(request, user):
     username = request.session['username']
     categories = Category.objects.all()
-    context = {'username': username, 'loggedin': True, 'member': user, 'categories': categories}
+    context = {'user': user, 'loggedin': True, 'member': user, 'categories': categories}
     return render(request, 'news/profile.html', context)
 
 @loggedin
@@ -142,10 +142,11 @@ def updatePassword(request, user):
             user.save()
             username = request.session['username']
             categories = Category.objects.all()
-            context = {'username': username, 'loggedin': True, 'member': user, 'categories': categories}
-            return render(request, 'news/profile.html', context)
+            context = {'successful': True , 'message': "Password Updated Successfully!"}
+            return JsonResponse(context)
         else:
-            raise Http404("Current password is incorrect.")
+            context = {'successful': False , 'message': "The current password is incorrect!"}
+            return JsonResponse(context)
     else:
         raise Http404("Something went wrong.")
 
