@@ -9,7 +9,7 @@
         <div id=" {{c.name}}">
             <h1 class= "category-title">{{c.name}}</h1>
             <br>
-            {% for a in c.articles.all %}
+            {% for a in c.articles.all|dictsortreversed:"pub_Date" %}
             <div id="{{a.id}}">
                 {%include "news/commentSection.html"%}
             </div>

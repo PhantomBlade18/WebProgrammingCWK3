@@ -81,7 +81,8 @@ def logout(request, user):
     return render(request,'news/index.html', context)
 
 def index(request):
-    articles = Article.objects.all()
+    articles = Article.objects.order_by('-pub_Date')
+    print(articles)
     categories = Category.objects.all()
     if 'username' in request.session:
         user = Member.objects.get(username = request.session['username'])
@@ -273,3 +274,7 @@ def updateComment(request,user):
         return JsonResponse(context)
     else:
         raise Http404("Invalid Request")
+
+
+
+
