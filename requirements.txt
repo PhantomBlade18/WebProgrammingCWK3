@@ -1,0 +1,7 @@
+Dependencies:
+
+pip install django-cleanup
+#Automatically deletes an old file when ImageField's value is changed/deleted
+
+pip install pillow
+#Python's imaging library 
