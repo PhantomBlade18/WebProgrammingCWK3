@@ -28,8 +28,8 @@ class TestProject(StaticLiveServerTestCase):
 
         #sends the input for all the 3 details for registration
         email=send_keys("something@gmail.com")
-        username.send_keys("BigChungos07")
-        password.send_keys("Chungus")
+        username.send_keys("123")
+        password.send_keys("123")
 
         #Waiting of 20 seconds to allow user to check the database to see that user has been registered
         time.sleep(20)
@@ -48,8 +48,18 @@ class TestProject(StaticLiveServerTestCase):
         password = self.browser.find_element_by_id("password")
 
         #Sends in the details for the inputs to login
-        username.send_keys("BigChungos07")
-        password.send_keys("Chungus")
+        username.send_keys("123")
+        password.send_keys("123")
 
         #user clicks the like buttons
         self.browser.find_element_by_name("like-button").click()
+
+        #Finds the comment section of the first article and submits a test comment
+        comment = self.browser.find_element_by_id("postingComment")
+        comment.send_keys("This is the test comment")
+        self.browser.find_element_by_id("postingSubmit")
+
+        time.sleep(5)
+
+        #Deletes the first comment which is the latest comment that we sent as a test.
+        self.browser.find_element_by_class("deleteComment").click()
