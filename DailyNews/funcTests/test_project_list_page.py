@@ -47,7 +47,7 @@ class TestProject(StaticLiveServerTestCase):
         self.browser.find_element_by_id("registerSubmit").click()
 
         #Waiting of 20 seconds to allow user to check the database to see that user has been registered
-        time.sleep(5)
+        time.sleep(10)
 
 
 
@@ -72,7 +72,7 @@ class TestProject(StaticLiveServerTestCase):
 
 
         self.browser.get(self.live_server_url + '/news/')
-        time.sleep(20)
+        time.sleep(10)
 
         #user clicks the like buttons
         self.browser.find_element_by_id("likeButton").click()
