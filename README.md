@@ -19,7 +19,7 @@ Login Feature
 Select Favourites in Profile (B3)
 Like Feature (B4)
 Ajax Liking, Posting, editing and deleting(A1)
-Debugging
+Debugging Everything
 Project set up ( models creation etc)
 
 Riya:

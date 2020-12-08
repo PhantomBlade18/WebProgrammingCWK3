@@ -9,15 +9,8 @@ import os
 class TestProject(StaticLiveServerTestCase):
 
     def setUp(self):
-        os.chmod('funcTests/chromedriver',755)
-        self.browser = webdriver.Chrome(executable_path='funcTests/chromedriver')
-
-    def tearDown(self):
-        self.browser.close()
-
-    def setUp(self):
-        os.chmod('funcTests/chromedriver',755)
-        self.browser = webdriver.Chrome(executable_path='funcTests/chromedriver')
+        #os.chmod('funcTests/chromedriver',755)
+        self.browser = webdriver.Chrome(executable_path='funcTests/chromedriver.exe')
 
     def tearDown(self):
         self.browser.close()
