@@ -26,5 +26,11 @@ urlpatterns = [
     path('MyNews/addReply/', views.addReply, name='AddReply'),
     path('MyNews/deleteComment/', views.deleteComment, name='DeleteComment'),
     path('MyNews/deleteReply/', views.deleteReply, name='DeleteReply'),
-    path('MyNews/updateComment/', views.updateComment, name='UpdateComment')
+    path('MyNews/updateComment/', views.updateComment, name='UpdateComment'),
+    path('login/likeArticle/', views.LikeArticle, name='LikeArticle'),
+    path('login/addComment/', views.addComment, name='AddComment'),
+    path('login/addReply/', views.addReply, name='AddReply'),
+    path('login/deleteComment/', views.deleteComment, name='DeleteComment'),
+    path('login/deleteReply/', views.deleteReply, name='DeleteReply'),
+    path('login/updateComment/', views.updateComment, name='UpdateComment')
 ]
