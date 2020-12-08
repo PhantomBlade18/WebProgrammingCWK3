@@ -26,9 +26,9 @@ SECRET_KEY = 'c+qin3fvgqv$a@i+e9c+yet^@0^!k^d3xc@b(tqc@q88av@doi'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-
+    '127.0.0.1',
+    'localhost',
     '.apps.okd.eecs.qmul.ac.uk',
-
 ]
 
 ALLOWED_CIDR_NETS = ['10.128.0.0/14']
