@@ -43,7 +43,7 @@ Leaving comments on an article(I2)
 
 
 URL of deployed application:
-# add url here
+https://group66-group66.apps.okd.eecs.qmul.ac.uk/
 
 Admin user:
 Username - admin
@@ -60,9 +60,3 @@ Password - Bond007
 Test user 3:
 Username - SunnyCheng
 Password - Random@123
-
-
-
-
-
-
