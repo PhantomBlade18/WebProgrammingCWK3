@@ -32,5 +32,11 @@ urlpatterns = [
     path('login/addReply/', views.addReply, name='AddReply'),
     path('login/deleteComment/', views.deleteComment, name='DeleteComment'),
     path('login/deleteReply/', views.deleteReply, name='DeleteReply'),
-    path('login/updateComment/', views.updateComment, name='UpdateComment')
+    path('login/updateComment/', views.updateComment, name='UpdateComment'),
+    path('registerUser/likeArticle/', views.LikeArticle, name='LikeArticle'),
+    path('registerUser/addComment/', views.addComment, name='AddComment'),
+    path('registerUser/addReply/', views.addReply, name='AddReply'),
+    path('registerUser/deleteComment/', views.deleteComment, name='DeleteComment'),
+    path('registerUser/deleteReply/', views.deleteReply, name='DeleteReply'),
+    path('registerUser/updateComment/', views.updateComment, name='UpdateComment')
 ]

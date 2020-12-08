@@ -39,25 +39,16 @@
 					{%else%}
 					{%endif%}
 					<li class="nav-item">
-						<a class="nav-link" href="{% url 'index' %}">Home</a>
+						<a class="nav-link" href="{% url 'index' %}" id="home">Home</a>
 					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							News
-						</a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-							<a class="dropdown-item" href="#">Category1</a>
-							<a class="dropdown-item" href="#">Cateogry2</a>
-							<a class="dropdown-item" href="#">Category3</a>
-						</div>
-					</li>
+					
 
 					{%if loggedin%}
 					<li class="nav-item">
 						<a class="nav-link" href="{% url 'myNews' %}">My News</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{% url 'logout' %}">Log out</a>
+						<a class="nav-link" href="{% url 'logout' %} " id="logoutButton">Log out</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="{% url 'viewProfile' %}">Profile</a>

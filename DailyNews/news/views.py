@@ -82,7 +82,6 @@ def logout(request, user):
 
 def index(request):
     articles = Article.objects.order_by('-pub_Date')
-    print(articles)
     categories = Category.objects.all()
     if 'username' in request.session:
         user = Member.objects.get(username = request.session['username'])

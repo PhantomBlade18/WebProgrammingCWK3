@@ -60,3 +60,13 @@ Password - Bond007
 Test user 3:
 Username - SunnyCheng
 Password - Random@123
+
+
+
+
+
+cat = Category(name= "Science")
+    cat.save()
+    print(cat)
+    art = Article(title= "This is a test Article", body ="Test Body blah blah blah", pub_Date = datetime.datetime.now(), category=cat)
+    art.save()

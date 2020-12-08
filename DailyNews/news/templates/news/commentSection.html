@@ -7,11 +7,11 @@
 <div id="{{a.id}}">
     {%if loggedin%}
     {%if user in a.likes.all %}
-    <a id="" class="likeArticle likeUnlikeComment btn btn-primary btn-sm" name="like-button">Unlike</a>
-    <a class="comment-button likeUnlikeComment btn btn-primary btn-sm">Comment</a>
+    <a class="likeArticle likeUnlikeComment btn btn-primary btn-sm" id="likeButton" name="like-button">Unlike</a>
+    <a class="comment-button likeUnlikeComment btn btn-primary btn-sm" id="commentButton">Comment</a>
     {%else%}
     <a class="likeArticle likeUnlikeComment btn btn-primary btn-sm" id="likeButton" name="like-button">Like</a>
-    <a class="comment-button likeUnlikeComment btn btn-primary btn-sm">Comment</a>
+    <a class="comment-button likeUnlikeComment btn btn-primary btn-sm " id="commentButton">Comment</a>
     {%endif%}
     {%endif%}
     <div class="comments">
@@ -28,7 +28,7 @@
             <p class="comment-meta commentText">{{com.text}}</p>
             <a class="Reply btn btn-secondary btn-sm ">Reply</a>
             {%if com.author.username == user.username %}
-            <a class="deleteComment btn btn-secondary btn-sm ">Delete</a>
+            <a class="deleteComment btn btn-secondary btn-sm " id="deleteComment">Delete</a>
             <a class="editCommentbtn btn btn-secondary btn-sm ">Edit</a>
             <div class="editCommentForm">
                 <p>Edit Comment:</p>
@@ -110,7 +110,7 @@
             Reply to the article above
         </label>
         <br />
-        <textarea id="postingComment"class="form-control" id="exampleFormControlTextarea1" rows="3" name="reply" placeholder="Enter your reply here"></textarea>
+        <textarea id="postingComment"class="form-control"  rows="3" name="reply" placeholder="Enter your reply here"></textarea>
         <button id="postingSubmit"class="submitComment btn btn-primary submit-button">Submit</button>
     </div>
 

@@ -3,10 +3,12 @@ from selenium.webdriver.common.keys import Keys
 from news.models import Article,Category,Member
 from django.urls import reverse
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+import datetime
 import time
 import os
 
 class TestProject(StaticLiveServerTestCase):
+    fixtures = ['data.json']
 
     def setUp(self):
         #os.chmod('funcTests/chromedriver',755)
@@ -42,10 +44,27 @@ class TestProject(StaticLiveServerTestCase):
         #Waiting of 20 seconds to allow user to check the database to see that user has been registered
         time.sleep(10)
 
+        #user clicks the like buttons
+        self.browser.find_element_by_id("likeButton").click()
+        self.browser.find_element_by_id("commentButton").click()
 
+        #Finds the comment section of the first article and submits a test comment
+        comment = self.browser.find_element_by_id("postingComment")
+        comment.send_keys("This is the test comment")
+        self.browser.find_element_by_id("postingSubmit").click()
 
-    def test_project_login_liking_posting_deleting(self):
-        self.browser.get(self.live_server_url + '/news/')
+        time.sleep(5)
+
+        #Finds the login button and clicks it to redirect to the login page
+        self.browser.find_element_by_id("home").click()
+        time.sleep(5)
+        #Deletes the first comment which is the latest comment that we sent as a test.
+        self.browser.find_element_by_id("commentButton").click()
+        time.sleep(5)
+        self.browser.find_element_by_id("deleteComment").click()
+
+        self.browser.find_element_by_id("logoutButton").click()
+
         #Finds the login button and clicks it to redirect to the login page
         self.browser.find_element_by_id("loginButton").click()
 
@@ -63,19 +82,4 @@ class TestProject(StaticLiveServerTestCase):
         #User clicks login button to log in
         self.browser.find_element_by_id("loginButton").click()
 
-
-        self.browser.get(self.live_server_url + '/news/')
-        time.sleep(10)
-
-        #user clicks the like buttons
-        self.browser.find_element_by_id("likeButton").click()
-
-        #Finds the comment section of the first article and submits a test comment
-        comment = self.browser.find_element_by_id("postingComment")
-        comment.send_keys("This is the test comment")
-        self.browser.find_element_by_id("postingSubmit")
-
-        time.sleep(5)
-
-        #Deletes the first comment which is the latest comment that we sent as a test.
-        self.browser.find_element_by_class("deleteComment").click()
+        
