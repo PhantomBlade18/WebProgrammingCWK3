@@ -1,7 +1,13 @@
-Dependencies:
-
-pip install django-cleanup
-#Automatically deletes an old file when ImageField's value is changed/deleted
-
-pip install pillow
-#Python's imaging library 
+asgiref==3.2.10
+certifi==2020.6.20
+Django==3.1.1
+django-allow-cidr==0.3.1
+django-cleanup==5.1.0
+netaddr==0.8.0
+Pillow==7.2.0
+pytz==2020.1
+selenium==3.141.0
+sqlparse==0.3.1
+urllib3==1.26.2
+whitenoise==5.2.0
+wincertstore==0.2
