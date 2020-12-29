@@ -34,7 +34,7 @@ Model set up for profile pics
 Ken:
 
 Selenium Testing (A3)
-Deployment
+Deployment (Thank you ken we love you for this)
 Registration Page (B1)
 CSS Styling
 Ajax
